@@ -1,10 +1,11 @@
 # CyberCloud-Lab
 
 ## Description
-A full-stack cloud SOC environment built on AWS — from honeypot deployment to SIEM integration, detection engineering, and automated incident response.
+A full-stack cloud SOC environment built on AWS, covering everything from deploying a honeypot to setting up a SIEM, creating detection rules, and automating responses.
 
-This project simulates a real-world Security Operations Center (SOC) pipeline: capture live attack data with honeypots, ingest logs alongside AWS-native telemetry into a SIEM, write detection rules mapped to MITRE ATT&CK, investigate incidents, and automate response.
-Goal: To develop practical experience and expand my knowledge of cloud and security tools.
+This project simulates a real-world SOC by capturing live attack data, sending logs and AWS telemetry into a SIEM, mapping detections to MITRE ATT&CK, and practicing basic incident investigation and response.
+
+Goal: To gain hands-on experience and build a stronger understanding of cloud and security tools.
 
 ---
 
