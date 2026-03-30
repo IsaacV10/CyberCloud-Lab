@@ -5,6 +5,7 @@ A full-stack cloud SOC environment built on AWS — from honeypot deployment to 
 
 This project simulates a real-world Security Operations Center (SOC) pipeline: capture live attack data with honeypots, ingest logs alongside AWS-native telemetry into a SIEM, write detection rules mapped to MITRE ATT&CK, investigate incidents, and automate response.
 Goal: To develop practical experience and expand my knowledge of cloud and security tools.
+
 ---
 
 ## Architecture
