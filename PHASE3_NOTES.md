@@ -1,0 +1,14 @@
+# Phase 3: Splunk SIEM
+- Splunk Free installed on EC2 instance
+- Ingesting SSH and HTTP honeypot logs (NDJSON)
+- Dashboard: Honeypot Attack Monitor
+  - Attacks over time
+  - Top attacker IPs
+  - Geo location map
+  - Brute force credentials
+  - Attack timeline by sensor
+  - Attacker commands
+  - Failed vs successful logins
+  - HTTP traffic and IPs
+  - HTTP brute force attempts
+  - Summary stats (total attacks, unique IPs, commands captured)
