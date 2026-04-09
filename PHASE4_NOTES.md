@@ -1,0 +1,12 @@
+# Phase 4: Windows Endpoint + Attack Simulation
+- Windows Server 2025 EC2 instance deployed
+- Sysmon installed with SwiftOnSecurity config
+- Splunk Universal Forwarder shipping Sysmon + Security logs to Splunk
+- Atomic Red Team installed and executed:
+  - T1136.001 - Create Account (Persistence)
+  - T1082 - System Information Discovery
+  - T1059.001 - PowerShell Execution
+  - T1053.005 - Scheduled Task (Persistence)
+  - T1003.001 - Credential Dumping
+  - T1547.001 - Registry Run Keys (Persistence)
+- All Windows endpoint telemetry visible in Splunk with field extraction via spath
