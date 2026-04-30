@@ -15,7 +15,7 @@ This project simulates a real-world Security Operations Center (SOC). It capture
 ┌────────────────────────────────────────────────────────────────── ┐
 │                     LINUX EC2 INSTANCE                            │
 │                                                                   │
-│   ┌─────────────────┐    ┌──────────────────┐                     │ 
+│   ┌───────────────── ┐    ┌──────────────────┐                    │ 
 │   │  SSH Honeypot    │    │  HTTP Honeypot   │                    │
 │   │  (Paramiko)      │    │  (Flask/WP-login)│                    │
 │   └────────┬─────────┘    └────────┬─────────┘                    │
@@ -31,7 +31,7 @@ This project simulates a real-world Security Operations Center (SOC). It capture
 │              └───────┬────────┘                                   │
 │                      │                                            │
 │              Dashboards / Alerts / Detection Rules                │
-└──────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────── ┘
  
 ┌──────────────────────────────────────────────────────────────────┐
 │                  WINDOWS SERVER 2025 EC2                         │
