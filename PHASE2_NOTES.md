@@ -66,12 +66,6 @@ VPC Flow Logs ──┘
 
 All three services write their data to a centralized S3 bucket. In a production environment, this data would be ingested into Splunk for correlation with endpoint and application logs. GuardDuty findings additionally trigger the automated response pipeline built in Phase 7 via EventBridge.
 
-## Cost
-
-- **CloudTrail:** First trail is free. S3 storage costs are minimal (pennies per month for this volume).
-- **GuardDuty:** 30-day free trial, then pay-per-use based on data volume analyzed. Low cost for a single-instance lab.
-- **VPC Flow Logs:** Charged based on data volume published. Costs are minimal for low-traffic environments.
-
 ## Key Takeaways
 
 - Cloud security monitoring requires visibility at multiple layers: API activity (CloudTrail), automated threat detection (GuardDuty), and network metadata (VPC Flow Logs)
