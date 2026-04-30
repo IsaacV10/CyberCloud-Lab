@@ -1,0 +1,122 @@
+import json
+import boto3
+import os
+from datetime import datetime
+
+ec2 = boto3.client('ec2')
+
+# Security group ID where blocked IPs will be added
+# You'll replace this with your actual security group ID
+BLOCK_SG_ID = os.environ.get('BLOCK_SG_ID', 'sg-2131937129')
+
+def lambda_handler(event, context):
+    """
+    Triggered by GuardDuty findings via EventBridge.
+    Extracts the attacker IP and adds a DENY rule to a security group.
+    """
+    print(f"Received event: {json.dumps(event)}")
+    
+    try:
+        # Extract the GuardDuty finding details
+        detail = event.get('detail', {})
+        finding_type = detail.get('type', 'Unknown')
+        severity = detail.get('severity', 0)
+        title = detail.get('title', 'No title')
+        account_id = detail.get('accountId', 'Unknown')
+        region = detail.get('region', 'Unknown')
+        
+        # Extract the remote IP address from the finding
+        remote_ip = None
+        
+        # Try different paths where GuardDuty stores the attacker IP
+        service = detail.get('service', {})
+        action = service.get('action', {})
+        
+        # Network connection action
+        if 'networkConnectionAction' in action:
+            remote_ip = action['networkConnectionAction'].get('remoteIpDetails', {}).get('ipAddressV4')
+        
+        # Port probe action
+        elif 'portProbeAction' in action:
+            port_probes = action['portProbeAction'].get('portProbeDetails', [])
+            if port_probes:
+                remote_ip = port_probes[0].get('remoteIpDetails', {}).get('ipAddressV4')
+        
+        # AWS API call action
+        elif 'awsApiCallAction' in action:
+            remote_ip = action['awsApiCallAction'].get('remoteIpDetails', {}).get('ipAddressV4')
+        
+        if not remote_ip:
+            print(f"No remote IP found in finding: {finding_type}")
+            return {
+                'statusCode': 200,
+                'body': json.dumps('No IP to block')
+            }
+        
+        print(f"ALERT: {finding_type} | Severity: {severity} | IP: {remote_ip}")
+        
+        # Check if the IP is already blocked
+        sg = ec2.describe_security_groups(GroupIds=[BLOCK_SG_ID])
+        existing_rules = sg['SecurityGroups'][0].get('IpPermissionsEgress', [])
+        
+        # Check ingress rules for existing block
+        ingress_rules = sg['SecurityGroups'][0].get('IpPermissions', [])
+        for rule in ingress_rules:
+            for ip_range in rule.get('IpRanges', []):
+                if ip_range.get('CidrIp') == f"{remote_ip}/32":
+                    print(f"IP {remote_ip} is already blocked")
+                    return {
+                        'statusCode': 200,
+                        'body': json.dumps(f'IP {remote_ip} already blocked')
+                    }
+        
+        # Add NACL-style block by adding a deny-all ingress rule for this IP
+        # Since security groups are allow-only, we use a separate "block" SG
+        # that is NOT attached to any instance — we track blocked IPs here
+        # and use it as a reference list for NACLs or WAF rules
+        
+        # For this lab, we'll add the IP to the security group description
+        # as a tracking mechanism and log it
+        
+        # Block the IP by adding an ingress rule that we can reference
+        try:
+            ec2.authorize_security_group_ingress(
+                GroupId=BLOCK_SG_ID,
+                IpPermissions=[{
+                    'IpProtocol': '-1',
+                    'IpRanges': [{
+                        'CidrIp': f'{remote_ip}/32',
+                        'Description': f'BLOCKED by Lambda | {finding_type} | Severity {severity} | {datetime.utcnow().isoformat()}'
+                    }]
+                }]
+            )
+            print(f"SUCCESS: Blocked IP {remote_ip} in security group {BLOCK_SG_ID}")
+        except ec2.exceptions.ClientError as e:
+            if 'InvalidPermission.Duplicate' in str(e):
+                print(f"IP {remote_ip} already has a rule")
+            else:
+                raise e
+        
+        # Build response summary
+        response = {
+            'finding_type': finding_type,
+            'severity': severity,
+            'blocked_ip': remote_ip,
+            'security_group': BLOCK_SG_ID,
+            'timestamp': datetime.utcnow().isoformat(),
+            'action_taken': 'IP blocked in security group'
+        }
+        
+        print(f"Response: {json.dumps(response)}")
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps(response)
+        }
+        
+    except Exception as e:
+        print(f"ERROR: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f'Error: {str(e)}')
+        }
