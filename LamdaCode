@@ -6,7 +6,6 @@ from datetime import datetime
 ec2 = boto3.client('ec2')
 
 # Security group ID where blocked IPs will be added
-# You'll replace this with your actual security group ID
 BLOCK_SG_ID = os.environ.get('BLOCK_SG_ID', 'sg-2131937129')
 
 def lambda_handler(event, context):
@@ -69,14 +68,6 @@ def lambda_handler(event, context):
                         'statusCode': 200,
                         'body': json.dumps(f'IP {remote_ip} already blocked')
                     }
-        
-        # Add NACL-style block by adding a deny-all ingress rule for this IP
-        # Since security groups are allow-only, we use a separate "block" SG
-        # that is NOT attached to any instance — we track blocked IPs here
-        # and use it as a reference list for NACLs or WAF rules
-        
-        # For this lab, we'll add the IP to the security group description
-        # as a tracking mechanism and log it
         
         # Block the IP by adding an ingress rule that we can reference
         try:
