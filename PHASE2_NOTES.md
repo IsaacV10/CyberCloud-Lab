@@ -52,7 +52,7 @@ In a real enterprise, attackers don't just target the applications. They go afte
 - Aggregation interval: 1 minute
 - Destination: Same S3 bucket as CloudTrail logs
 
-## How These Connect to the SOC Pipeline
+## How These Connect to the Pipeline for the system
 
 ```
 CloudTrail ─────┐
