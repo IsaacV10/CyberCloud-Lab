@@ -20,6 +20,9 @@ Both honeypots output structured JSON logs specifically designed for SIEM ingest
 | HTTP Honeypot Port | 8080 (open to 0.0.0.0/0) |
 | Admin SSH Port | 22 (restricted to My IP only) |
 
+<img width="1490" height="501" alt="Screenshot 2026-04-30 002234" src="https://github.com/user-attachments/assets/7a7973bf-43be-49a4-af59-6e5be42c265d" />
+
+
 ## SSH Honeypot
 
 ### What It Does
