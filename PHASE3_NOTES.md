@@ -80,3 +80,36 @@ A Dashboard Studio dashboard was built to provide a real-time operational view o
 
 <img width="1429" height="1082" alt="Screenshot 2026-04-25 225227" src="https://github.com/user-attachments/assets/67525c79-6367-4192-9225-561fde6efb69" />
 
+## Data Volume
+ 
+After approximately one month of operation, the SIEM captured:
+ 
+| Metric | Value |
+|--------|-------|
+| Total honeypot events | 111,355 |
+| SSH auth attempts | 23,802 |
+| SSH connections | 28,023 |
+| HTTP requests | 2,153 |
+| HTTP probes | 1,637 |
+| Attacker commands captured | 12 |
+| Windows Security events | 2,197+ |
+| Windows Sysmon events | Active collection |
+
+## Security Configuration
+ 
+| Port | Source | Purpose |
+|------|--------|---------|
+| 8000 | My IP only | Splunk web interface access |
+| 9997 | Windows instance private IP | Splunk forwarder data receiving |
+
+## Challenges and Lessons Learned
+ 
+- **Disk space management** is critical when running Splunk on a small instance. Splunk's internal indexes (`_introspection`, `_internal`) can grow larger than the actual security data. Disabling unnecessary internal logging and scheduling regular cleanup prevents disk exhaustion.
+- **Real-time searches are expensive.** On a t2.micro, real-time alert searches consumed all available CPU and memory, preventing the web interface from starting. Scheduled searches (every 5 minutes) provide nearly the same detection capability at a fraction of the resource cost.
+- **Swap space is essential** for running Splunk on instances with limited RAM. The 4GB swap file allows Splunk to operate on a 1GB RAM instance, though with slower performance.
+- **Windows Event Log field extraction** requires the `| spath` command for XML parsing. The raw XML events are not automatically parsed into individual fields without this step or a dedicated Splunk add-on.
+
+## Key Takeaways
+ 
+- A SIEM transforms raw log data into actionable intelligence by providing search, correlation, visualization, and alerting capabilities
+- While I’m still learning how to use these tools, I realized how much easier things become with a SIEM like Splunk. When I first built the SSH honeypot, I had to log into the server and manually search through JSON files, which were often difficult to read and analyze.
