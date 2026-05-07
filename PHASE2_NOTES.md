@@ -2,7 +2,7 @@
 
 ## Overview
 
-Phase 2 adds cloud-layer visibility to the SOC environment. While Phase 1 captures attacks hitting the honeypots directly, Phase 2 monitors what's happening at the AWS infrastructure level — who's making API calls to your account, what network traffic is flowing through your VPC, and whether any of that activity looks malicious.
+Phase 2 adds cloud-layer visibility to the System environment. While Phase 1 captures attacks hitting the honeypots directly, Phase 2 monitors what's happening at the AWS infrastructure level — who's making API calls to your account, what network traffic is flowing through your VPC, and whether any of that activity looks malicious.
 
 In a real enterprise, attackers don't just target the applications. They go after cloud credentials, misconfigured IAM roles, and exposed services. These three AWS services provide the visibility needed to detect those types of threats.
 
