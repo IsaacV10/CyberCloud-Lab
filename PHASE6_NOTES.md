@@ -20,3 +20,16 @@ The most valuable events in any honeypot dataset are the **commands** — they s
 
 *Splunk search: `index=main sourcetype=_json event_type="command" | table timestamp src_ip username command session_id` — All 12 commands captured, showing the recon bot (31.56.209.39), another probe (117.72.157.108), and testing sessions (70.108.8.131).*
 
+## Incident 2: Automated Reconnaissance Bot
+ 
+### INC-2026-002 Summary
+ 
+| Field | Details |
+|-------|---------|
+| Incident ID | INC-2026-002 |
+| Severity | CRITICAL |
+| Source IP | 31.56.209.39 |
+| Visits | 2 (April 17 and April 21, 2026) |
+| Credentials Used | admin:admin (default) |
+| Command Executed | Container detection payload |
+| MITRE ATT&CK | T1078.001, T1059.004, T1082, T1497 |
