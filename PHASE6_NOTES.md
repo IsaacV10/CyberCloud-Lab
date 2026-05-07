@@ -8,13 +8,15 @@ During this phase I gathered looked for key to real attack data captured by the 
  
 The investigation began by understanding the full scope of captured data. With 111,355 events across 14 event types, the SIEM provided a comprehensive dataset to work with.
  
-![Event Type Breakdown](screenshots/phase6-event-breakdown.png)
+<img width="2563" height="857" alt="Screenshot 2026-04-25 225811" src="https://github.com/user-attachments/assets/9e6c49c5-d27b-4eff-9f62-632968622962" />
+
 *Splunk search: `index=main sourcetype=_json | stats count by event_type` — 111,355 total events including 23,802 auth attempts, 28,023 connections, 2,153 HTTP requests, and 12 attacker commands.*
 
 ## Finding the Incidents
  
 The most valuable events in any honeypot dataset are the **commands** — they show what attackers do after gaining access. Out of 111,355 events, only 12 command events were captured, making each one significant.
  
-![Attacker Commands](screenshots/phase6-attacker-commands.png)
+<img width="1272" height="650" alt="Screenshot 2026-04-25 230025" src="https://github.com/user-attachments/assets/6df03338-9b05-4ac8-a73c-bb64be9c4de8" />
+
 *Splunk search: `index=main sourcetype=_json event_type="command" | table timestamp src_ip username command session_id` — All 12 commands captured, showing the recon bot (31.56.209.39), another probe (117.72.157.108), and testing sessions (70.108.8.131).*
 
