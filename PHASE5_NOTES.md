@@ -2,7 +2,7 @@
 
 ## Overview
 
-Phase 5 builds the detection rules that turn raw log data into actionable alerts. In a SOC, analysts don't watch logs scroll by all day — they rely on automated rules that fire when specific suspicious patterns appear. Six Splunk alerts were created, each mapped to a MITRE ATT&CK technique, covering brute force attacks, persistence mechanisms, malicious execution, and credential theft.
+Phase 5 builds the detection rules that turn raw log data into actionable alerts. Relies on automated rules that fire when specific suspicious patterns appear. Six Splunk alerts were created, each mapped to a MITRE ATT&CK technique, covering brute force attacks, persistence mechanisms, malicious execution, and credential theft.
 
 ## Detection Rules
 
