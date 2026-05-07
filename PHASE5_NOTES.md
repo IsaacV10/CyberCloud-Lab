@@ -1,4 +1,4 @@
-# Phase 5: Detection Engineering
+# Phase 5: Detection 
 
 ## Overview
 
