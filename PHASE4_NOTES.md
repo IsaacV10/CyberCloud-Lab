@@ -12,7 +12,7 @@ Sysmon (System Monitor) logs detailed system activity that standard Windows Even
 | Event ID | Name | Detects |
 |----------|------|---------|
 | 1 | Process Create | Malicious command execution |
-| 10 | Process Access | Credential dumping (LSASS memory reads) |
+| 10 | Process Access | Credential dumping (memory reads) |
 | 13 | Registry Value Set | Persistence via startup keys |
  ## Splunk Universal Forwarder
  
