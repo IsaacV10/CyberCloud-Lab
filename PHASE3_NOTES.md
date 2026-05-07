@@ -2,7 +2,7 @@
  
 ## Overview
  
-Phase 3 establishes the central nervous system of the SOC environment. Splunk Enterprise (Free tier) was installed on the same EC2 instance running the honeypots, serving as the centralized SIEM where all log sources converge into a single searchable platform with dashboards, visualizations, and alerting capabilities.
+Phase 3 establishes the central system of the environment. Splunk Enterprise (Free tier) was installed on the same EC2 instance running the honeypots, serving as the centralized SIEM where all log sources converge into a single searchable platform with dashboards, visualizations, and alerting capabilities.
  
 Without a SIEM, security data sits in isolated log files across different systems. An analyst would have to manually SSH into each server, grep through raw text, and mentally correlate events across sources. Splunk eliminates that by ingesting everything into one place where you can search across all data sources simultaneously, build visualizations to spot patterns, and create alerts that fire automatically when something suspicious happens.
  
