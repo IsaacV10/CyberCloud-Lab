@@ -2,7 +2,7 @@
  
 ## Overview
  
-Phase 4 adds endpoint visibility to the SOC environment. A Windows Server 2025 EC2 instance was deployed with Sysmon for detailed endpoint logging and Atomic Red Team for adversary simulation. The Splunk Universal Forwarder ships all endpoint logs to the central SIEM, completing the multi-layer visibility: network (honeypots), cloud (CloudTrail/GuardDuty), and endpoint (Sysmon).
+Phase 4 adds endpoint visibility to the environment. A Windows Server 2025 EC2 instance was deployed with Sysmon for detailed endpoint logging and Atomic Red Team for adversary simulation. The Splunk Universal Forwarder ships all endpoint logs to the central SIEM, completing the multi-layer visibility: network (honeypots), cloud (CloudTrail/GuardDuty), and endpoint (Sysmon).
 ## Sysmon
  
 Sysmon (System Monitor) logs detailed system activity that standard Windows Event Logs miss — full command lines, parent process chains, network connections per process, registry modifications, and cross-process memory access. The SwiftOnSecurity configuration filters out normal system noise while capturing security-relevant events.
