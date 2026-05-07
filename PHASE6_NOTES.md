@@ -1,18 +1,20 @@
-Phase 6: Incident Investigation & Reporting
+# Phase 6: Incident Investigation & Reporting
+ 
+## Overview
+ 
+During this phase I gathered looked for key to real attack data captured by the honeypot infrastructure. Two incidents were selected from the live data, investigated using Splunk, and documented as formal incident reports following industry-standard SOC reporting formats.
 
-Overview
-Phase 6 applies the SOC analyst workflow to real attack data captured by the honeypot infrastructure. Two incidents were selected from the live data, investigated using Splunk, enriched with open-source threat intelligence, and documented as formal incident reports following industry-standard SOC reporting formats.
+## Investigation Starting Point
+ 
+The investigation began by understanding the full scope of captured data. With 111,355 events across 14 event types, the SIEM provided a comprehensive dataset to work with.
+ 
+![Event Type Breakdown](screenshots/phase6-event-breakdown.png)
+*Splunk search: `index=main sourcetype=_json | stats count by event_type` — 111,355 total events including 23,802 auth attempts, 28,023 connections, 2,153 HTTP requests, and 12 attacker commands.*
 
-Incidents Captured: 
-- INC-2026-001: SSH Brute Force Campaign (47.250.181.61, 8,726 attempts, T1110.001)
-- INC-2026-002: Automated Recon Bot (31.56.209.39, container detection, T1059.004/T1082)
-
-Incident 1: SSH Brute Force Campaign
-INC-2026-001 Summary
-FieldDetailsIncident IDINC-2026-001SeverityHIGHSource IP47.250.181.61Duration61 hours (April 13-16, 2026)Total Attempts8,726 authentication attemptsTarget Accountroot (exclusively)MITRE ATT&CKT1110.001 - Brute Force: Password Guessing
-
-
-Incident 2: Automated Reconnaissance Bot
-INC-2026-002 Summary
-FieldDetailsIncident IDINC-2026-002SeverityCRITICALSource IP31.56.209.39Visits2 (April 17 and April 21, 2026)Credentials Usedadmin:admin (default)Command ExecutedContainer detection payloadMITRE ATT&CKT1078.001, T1059.004, T1082, T1497
+## Finding the Incidents
+ 
+The most valuable events in any honeypot dataset are the **commands** — they show what attackers do after gaining access. Out of 111,355 events, only 12 command events were captured, making each one significant.
+ 
+![Attacker Commands](screenshots/phase6-attacker-commands.png)
+*Splunk search: `index=main sourcetype=_json event_type="command" | table timestamp src_ip username command session_id` — All 12 commands captured, showing the recon bot (31.56.209.39), another probe (117.72.157.108), and testing sessions (70.108.8.131).*
 
